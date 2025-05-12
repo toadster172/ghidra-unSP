@@ -177,7 +177,7 @@ macro setAddCarryFlags(op1,op2) {
 
 macro setSubtractFlags(op1,op2) {
     local of = sborrow(op1, op2);
-    C_flag = carry(op1, ~op2);
+    C_flag = op1 >= op2;
 	S_flag = of ^^ N_flag;
 }
 
@@ -1100,12 +1100,12 @@ Bank0Mem: ""[imm16] is imm16 { export *:2 imm16; }
 :cmp opB, imm16 is (op0=4 & op1=4 & opN=1 & opA & opB) ; imm16 {
     local res = opB - imm16;
     setResultFlags(res);
-    setSubtractCarryFlags(opB, imm16);
+    setSubtractFlags(opB, imm16);
 }
 :cmp opB, Bank0Mem is (op0=4 & op1=4 & opN=2 & opA & opB) ; Bank0Mem {
     local res = opB - Bank0Mem;
     setResultFlags(res);
-    setSubtractCarryFlags(opB, Bank0Mem);
+    setSubtractFlags(opB, Bank0Mem);
 }
 # r1 = -0x1234
 :^opA = -imm16 is (op0=6 & op1=4 & opN=1 & opA & UnpackSR_opA) ; imm16 {
