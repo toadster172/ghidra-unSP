@@ -716,6 +716,13 @@ ALU6DstStack: ""["bp"+opimm] is op1=0 & opimm {
     build UnpackSR_opA;
     setResultFlags(opA);
 }
+:^"pc" = IndirectOp is op0=9 & op1=3 & opA_v=7 & IndirectOp  {
+	local off:2 = IndirectOp;
+	# inst_start is 8 bit byte, not word offset, need to load PC with word offset
+	local addr:3= ((inst_start >> 1) & 0xff0000) | zext(off);
+    setResultFlags(off);
+    goto [addr];
+}
 :^opA = ALU6Reg is op0=9 & op1=4 & opN=0 & opA & UnpackSR_opA & ALU6Reg  {
     opA = ALU6Reg;
     build UnpackSR_opA;

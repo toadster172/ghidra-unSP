@@ -10,7 +10,7 @@ A large number of instructions are implemented. The SLEIGH spec was made without
 - Update cs correctly
 - Cleanup decompiler output
 - Find a way to handle far pointers in the decompiler
-- Get the decompiler to recognize switch statements with jump tables
+- Properly update PC for all ALU operations
 - Implement push/pop fully
 - Revisit interrupts and related instructions
 - Revisit multiplication
